@@ -11,8 +11,8 @@ const blogSchema = new Schema(
       minLength: 10,
       maxLength: 300,
     },
-    commentsID: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
-    createdByID: { type: Schema.Types.ObjectId, ref: 'User' },
+    commentsId: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
+    createdById: { type: Schema.Types.ObjectId, ref: 'User' },
   },
   {
     timestamps: true,
