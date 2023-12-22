@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
+const User = require('../models/userModel');
 
-exports.getUserFromToken = (req, res, next) => {
+getUserFromToken = (req, res, next) => {
   if (req.token) {
     jwt.verify(req.token, process.env.JWT_SECRET, async (err, userData) => {
       if (err) {
@@ -18,3 +19,5 @@ exports.getUserFromToken = (req, res, next) => {
     next();
   }
 };
+
+module.exports = getUserFromToken;
