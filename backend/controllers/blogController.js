@@ -53,3 +53,5 @@ exports.blog_detail = asyncHandler(async (req, res, next) => {
     return res.status(200).json({ auth: false, data: selectedBlog });
   }
 });
+
+// exports.blog_detail_create_comment
