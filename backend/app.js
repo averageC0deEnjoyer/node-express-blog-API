@@ -3,7 +3,9 @@ const path = require('path');
 require('dotenv').config();
 const blogRouter = require('./routers/blogRouter');
 const signUpRouter = require('./routers/signUpRouter');
-const cors = require('cors');
+const logInRouter = require('./routers/logInRouter');
+
+// const cors = require('cors');
 const { connectToDb } = require('./utils/connectDB');
 
 const app = express();
@@ -27,6 +29,8 @@ app.get('/api', (req, res) => {
 });
 
 app.use('/signup', signUpRouter);
+
+app.use('/login', logInRouter);
 
 app.use('/blogs', blogRouter);
 
