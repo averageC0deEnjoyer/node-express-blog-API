@@ -12,7 +12,7 @@ function verifyToken(req, res, next) {
   //process the headers and put token at req Obj
   if (req.headers.authorization !== undefined) {
     const token = req.headers.authorization.split(' ')[1];
-    console.log(token);
+    // console.log(token);
     req.token = token;
     next();
   } else {
