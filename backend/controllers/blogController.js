@@ -49,17 +49,27 @@ exports.blog_detail_create_comment = asyncHandler(async (req, res, next) => {
       commentText: req.body.commentText,
       createdById: req.user._id,
     });
-    console.log(newComment);
     selectedBlog.commentsId.push(newComment._id);
-    console.log(selectedBlog);
     const updatedSelectedBlog = await Blog.findByIdAndUpdate(
       req.params.id,
       selectedBlog
     );
-    console.log(updatedSelectedBlog);
-    return res
-      .status(201)
-      .json({ auth: true, message: 'Success Create Comment' });
+
+    const populateSelectedBlog = await Blog.findById(req.params.id)
+      .populate({
+        path: 'commentsId',
+        populate: {
+          path: 'createdById',
+          select: 'firstName lastName username',
+        },
+        select: '-__v',
+      })
+      .exec();
+    return res.status(201).json({
+      auth: true,
+      message: 'Success Create Comment',
+      data: populateSelectedBlog,
+    });
   } else {
     return res
       .status(401)
