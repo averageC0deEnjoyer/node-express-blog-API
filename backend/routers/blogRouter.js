@@ -14,6 +14,16 @@ router.post(
   blogController.blog_detail_create_comment
 );
 
+//update a comment from a blog , user can only update their own comment
+router.put(
+  '/:id',
+  [verifyToken, getUserFromToken],
+  blogController.blog_detail_update_comment
+);
+
+//delete a comment from a blog , user can only delete their own comment
+// router.delete();
+
 //todo router.post to create comment, edit comment, delete comment by specific user
 
 module.exports = router;
