@@ -23,6 +23,11 @@ router.put(
 
 //delete a comment from a blog , user can only delete their own comment
 // router.delete();
+router.delete(
+  '/:id',
+  [verifyToken, getUserFromToken],
+  blogController.blog_detail_delete_comment
+);
 
 //todo router.post to create comment, edit comment, delete comment by specific user
 

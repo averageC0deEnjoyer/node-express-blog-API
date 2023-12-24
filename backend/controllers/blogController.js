@@ -32,12 +32,27 @@ exports.blog_detail = asyncHandler(async (req, res, next) => {
         user: req.user,
       });
     } else {
-      return res
-        .status(200)
-        .json({ auth: true, data: selectedBlog, user: req.user });
+      return res.status(200).json({
+        auth: true,
+        data: {
+          blogData: {
+            blogDetail: selectedBlog,
+            numberOfComments: selectedBlog.commentsId.length,
+          },
+        },
+        user: req.user,
+      });
     }
   } else {
-    return res.status(200).json({ auth: false, data: selectedBlog });
+    return res.status(200).json({
+      auth: false,
+      data: {
+        blogData: {
+          blogDetail: selectedBlog,
+          numberOfComments: selectedBlog.commentsId.length,
+        },
+      },
+    });
   }
 });
 
@@ -122,7 +137,18 @@ exports.blog_detail_update_comment = asyncHandler(async (req, res, next) => {
 });
 
 exports.blog_detail_delete_comment = asyncHandler(async (req, res, next) => {
+  //check user login or not
   if (req.user) {
+    const comment = await Comment.findById(req.body.commentId).exec();
+    // if no comment found, invalid
+    if (!comment) {
+      return res.status(404).json({ message: 'invalid comment' });
+    }
+    // check the comment is it created by the log in user
+    if (comment.createdById.equals(req.user._id)) {
+      Comment.findByIdAndDelete(req.body.commentId).exec();
+      return res.status(200).json({ message: 'Successful delete data' });
+    }
   } else {
     return res
       .status(401)
