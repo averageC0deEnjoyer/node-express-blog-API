@@ -125,11 +125,25 @@ exports.update_blog_detail = asyncHandler(async (req, res, next) => {
 
 exports.delete_comment_from_blog = asyncHandler(async (req, res, next) => {
   if (req.user && req.user.adminStatus === true) {
-    const comment = await Comment.findByIdAndDelete(req.body.commentId);
-    console.log(comment);
-    if (!comment) {
-      return res.status(404).json({ message: 'Not Found' });
+    const [blog, comment] = await Promise.all([
+      Blog.findById(req.params.blogId).exec(),
+      Comment.findByIdAndDelete(req.body.commentId).exec(),
+    ]);
+    if (!blog) {
+      return res.status(404).json({ message: 'Blog not found' });
     }
+    if (!comment) {
+      return res.status(404).json({ message: 'Comment not found' });
+    }
+    const filteredCommentsIdArr = blog.commentsId.filter(
+      (commentId) => !commentId.equals(req.body.commentId)
+    );
+    await Blog.findOneAndUpdate(
+      { _id: req.params.blogId },
+      { commentsId: filteredCommentsIdArr },
+      { new: true }
+    );
+    await Comment.findByIdAndDelete(req.body.commentId);
     return res.status(200).json({ message: 'Deleted Comment' });
   } else {
     return res.status(401).json({ message: 'Not Authorized' });
