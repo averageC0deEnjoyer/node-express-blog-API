@@ -4,6 +4,7 @@ const blogController = require('../controllers/blogController');
 const verifyToken = require('../utils/verifyToken');
 const getUserFromToken = require('../utils/getUserFromToken');
 
+//only fetch 'PUBLISHED' blog
 router.get('/', [verifyToken, getUserFromToken], blogController.blog_list);
 
 router.get('/:id', [verifyToken, getUserFromToken], blogController.blog_detail);

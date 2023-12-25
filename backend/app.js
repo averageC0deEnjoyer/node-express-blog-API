@@ -4,6 +4,7 @@ require('dotenv').config();
 const blogRouter = require('./routers/blogRouter');
 const signUpRouter = require('./routers/signUpRouter');
 const logInRouter = require('./routers/logInRouter');
+const adminRouter = require('./routers/adminRouter');
 
 // const cors = require('cors');
 const { connectToDb } = require('./utils/connectDB');
@@ -33,6 +34,8 @@ app.use('/signup', signUpRouter);
 app.use('/login', logInRouter);
 
 app.use('/blogs', blogRouter);
+
+app.use('/admin', adminRouter);
 
 app.use((req, res, next) => {
   next(createError(404));

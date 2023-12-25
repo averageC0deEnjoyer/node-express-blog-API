@@ -9,7 +9,7 @@ getUserFromToken = (req, res, next) => {
       } else {
         const user = await User.findOne(
           { username: userData.username },
-          'id firstName lastName username'
+          'id firstName lastName username adminStatus'
         ).exec();
         req.user = user;
         next();

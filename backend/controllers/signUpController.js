@@ -32,6 +32,8 @@ exports.sign_up_post = asyncHandler(async (req, res, next) => {
             lastName: req.body.lastName,
             username: req.body.username,
             password: hashedPassword,
+            //admin status default false so people cant signup with adminstatus true, have to from PUT route
+            adminStatus: false,
           });
           //also create token for subsequent request
           jwt.sign(
@@ -50,7 +52,7 @@ exports.sign_up_post = asyncHandler(async (req, res, next) => {
                   firstName: newUser.firstName,
                   lastName: newUser.lastName,
                   username: newUser.username,
-                  adminStatus: newUser.adminStatus,
+                  adminStatus: newUser.adminStatus, // maybe can use false here
                   id: newUser._id,
                 },
                 token: token,
