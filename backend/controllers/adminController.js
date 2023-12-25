@@ -31,14 +31,33 @@ exports.create_blog = asyncHandler(async (req, res, next) => {
       commentsId: [],
       createdById: req.user._id,
     });
-    return res
-      .status(201)
-      .json({
-        auth: true,
-        message: 'Blog succesfully created',
-        data: { blog: newBlog },
-      });
+    return res.status(201).json({
+      auth: true,
+      message: 'Blog succesfully created',
+      data: { blog: newBlog },
+    });
   } else {
     return res.status(401).json({ message: 'Not Authorized' });
   }
 });
+
+exports.update_blog_published_state_from_home = asyncHandler(
+  async (req, res, next) => {
+    if (req.user && req.user.adminStatus === true) {
+      const { blogId } = req.body;
+      const selectedBlog = await Blog.findById(blogId).exec();
+      const updatedBlog = await Blog.findOneAndUpdate(
+        { _id: blogId },
+        { published: !selectedBlog.published },
+        { new: true }
+      ).exec();
+      return res.status(200).json({
+        auth: true,
+        message: 'Success update publish state',
+        data: { blog: updatedBlog },
+      });
+    } else {
+      return res.status(401).json({ message: 'Not Authorized' });
+    }
+  }
+);
