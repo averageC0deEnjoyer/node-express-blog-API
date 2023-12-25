@@ -94,3 +94,25 @@ exports.get_blog_detail = asyncHandler(async (req, res, next) => {
     return res.status(401).json({ message: 'Not Authorized' });
   }
 });
+
+exports.update_blog_detail = asyncHandler(async (req, res, next) => {
+  if (req.user && req.user.adminStatus === true) {
+    if (!req.body.title || !req.body.description) {
+      return res
+        .status(400)
+        .json({ message: 'Please Input all the Required Fields' });
+    }
+    const updatedBlog = await Blog.findByIdAndUpdate(
+      req.params.blogId,
+      req.body,
+      {
+        new: true,
+      }
+    );
+    return res
+      .status(200)
+      .json({ message: 'Update Blog Successful', data: { blog: updatedBlog } });
+  } else {
+    return res.status(401).json({ message: 'Not Authorized' });
+  }
+});

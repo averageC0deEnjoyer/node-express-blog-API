@@ -29,4 +29,10 @@ router.get(
   adminController.get_blog_detail
 );
 
+router.post(
+  '/:blogId',
+  [verifyToken, getUserFromToken],
+  adminController.update_blog_detail
+);
+
 module.exports = router;
