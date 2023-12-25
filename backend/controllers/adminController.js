@@ -2,7 +2,7 @@ const asyncHandler = require('express-async-handler');
 
 const Blog = require('../models/blogModel');
 const Comment = require('../models/commentModel');
-
+//show all blog list
 exports.blog_list = asyncHandler(async (req, res, next) => {
   const blogList = await Blog.find({}, '-description')
     .sort({ title: 1 })
@@ -14,6 +14,7 @@ exports.blog_list = asyncHandler(async (req, res, next) => {
     return res.status(401).json({ message: 'Not Authorized' });
   }
 });
+//create blog from home page
 
 exports.create_blog = asyncHandler(async (req, res, next) => {
   if (req.user && req.user.adminStatus === true) {
@@ -40,7 +41,7 @@ exports.create_blog = asyncHandler(async (req, res, next) => {
     return res.status(401).json({ message: 'Not Authorized' });
   }
 });
-
+//edit publish state from home page
 exports.update_blog_published_state_from_home = asyncHandler(
   async (req, res, next) => {
     if (req.user && req.user.adminStatus === true) {
@@ -61,3 +62,12 @@ exports.update_blog_published_state_from_home = asyncHandler(
     }
   }
 );
+
+exports.delete_blog = asyncHandler(async (req, res, next) => {
+  if (req.user && req.user.adminStatus === true) {
+    await Blog.findByIdAndDelete(req.body.blogId).exec();
+    return res.status(200).json({ message: 'Blog Deleted' });
+  } else {
+    return res.status(401).json({ message: 'Not Authorized' });
+  }
+});
