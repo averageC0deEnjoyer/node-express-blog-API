@@ -65,8 +65,12 @@ exports.update_blog_published_state_from_home = asyncHandler(
 
 exports.delete_blog = asyncHandler(async (req, res, next) => {
   if (req.user && req.user.adminStatus === true) {
+    const blog = await Blog.findById(req.body.blogId).exec();
+    blog.commentsId.forEach(async (commentId) => {
+      await Comment.findByIdAndDelete(commentId).exec();
+    });
     await Blog.findByIdAndDelete(req.body.blogId).exec();
-    return res.status(200).json({ message: 'Blog Deleted' });
+    return res.status(200).json({ message: 'Blog and all Comment Deleted' });
   } else {
     return res.status(401).json({ message: 'Not Authorized' });
   }

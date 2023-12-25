@@ -68,9 +68,10 @@ exports.blog_detail_create_comment = asyncHandler(async (req, res, next) => {
     });
     selectedBlog.commentsId.push(newComment._id);
 
-    const populateSelectedAndUpdatedBlog = await Blog.findByIdAndUpdate(
+    const selectedAndUpdatedBlog = await Blog.findByIdAndUpdate(
       req.params.id,
-      selectedBlog
+      selectedBlog,
+      { new: true }
     )
       .populate({
         path: 'commentsId',
@@ -86,8 +87,8 @@ exports.blog_detail_create_comment = asyncHandler(async (req, res, next) => {
       message: 'Success Create Comment',
       data: {
         blogData: {
-          blogDetail: populateSelectedAndUpdatedBlog,
-          numberOfComments: populateSelectedAndUpdatedBlog.commentsId.length,
+          blogDetail: selectedAndUpdatedBlog,
+          numberOfComments: selectedAndUpdatedBlog.commentsId.length,
         },
       },
     });
