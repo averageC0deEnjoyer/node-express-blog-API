@@ -71,3 +71,26 @@ exports.delete_blog = asyncHandler(async (req, res, next) => {
     return res.status(401).json({ message: 'Not Authorized' });
   }
 });
+
+exports.get_blog_detail = asyncHandler(async (req, res, next) => {
+  if (req.user && req.user.adminStatus === true) {
+    const blog = await Blog.findById(req.params.blogId)
+      .populate({
+        path: 'commentsId',
+        populate: {
+          path: 'createdById',
+          select: 'firstName lastName username',
+        },
+        select: '-__v',
+      })
+      .exec();
+    if (!blog) {
+      return res.status(200).json({ message: 'No Blog Found' });
+    }
+    return res
+      .status(200)
+      .json({ message: 'Success Get Blog Data', data: { blog } });
+  } else {
+    return res.status(401).json({ message: 'Not Authorized' });
+  }
+});

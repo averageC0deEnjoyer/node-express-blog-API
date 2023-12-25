@@ -23,6 +23,10 @@ router.delete(
   adminController.delete_blog
 );
 
-// router.put();
+router.get(
+  '/:blogId',
+  [verifyToken, getUserFromToken],
+  adminController.get_blog_detail
+);
 
 module.exports = router;
