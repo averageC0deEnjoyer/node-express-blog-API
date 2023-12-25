@@ -18,7 +18,7 @@ router.patch(
 );
 //delete a blog from home page
 router.delete(
-  '/',
+  '/:blogId',
   [verifyToken, getUserFromToken],
   adminController.delete_blog
 );
@@ -33,6 +33,12 @@ router.post(
   '/:blogId',
   [verifyToken, getUserFromToken],
   adminController.update_blog_detail
+);
+
+router.delete(
+  '/:blogId/comments',
+  [verifyToken, getUserFromToken],
+  adminController.delete_comment_from_blog
 );
 
 module.exports = router;

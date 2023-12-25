@@ -142,15 +142,31 @@ exports.blog_detail_update_comment = asyncHandler(async (req, res, next) => {
 exports.blog_detail_delete_comment = asyncHandler(async (req, res, next) => {
   //check user login or not
   if (req.user) {
-    const comment = await Comment.findById(req.body.commentId).exec();
+    const [blog, comment] = await Promise.all([
+      Blog.findById(req.params.id).exec(),
+      Comment.findById(req.body.commentId).exec(),
+    ]);
+    if (!blog) {
+      return res.status(404).json({ message: 'No Blog Found' });
+    }
+
     // if no comment found, invalid
     if (!comment) {
-      return res.status(404).json({ message: 'invalid comment' });
+      return res.status(404).json({ message: 'No Comment Found' });
     }
     // check the comment is it created by the log in user
     if (comment.createdById.equals(req.user._id)) {
-      Comment.findByIdAndDelete(req.body.commentId).exec();
-      return res.status(200).json({ message: 'Successful delete data' });
+      const filteredCommentsIdArr = blog.commentsId.filter(
+        (commentId) => !commentId.equals(req.body.commentId)
+      );
+      console.log(filteredCommentsIdArr);
+      await Blog.findOneAndUpdate(
+        { _id: req.params.id },
+        { commentsId: filteredCommentsIdArr },
+        { new: true }
+      );
+      await Comment.findByIdAndDelete(req.body.commentId).exec();
+      return res.status(200).json({ message: 'Successful delete comment' });
     }
   } else {
     return res

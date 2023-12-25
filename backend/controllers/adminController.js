@@ -65,11 +65,13 @@ exports.update_blog_published_state_from_home = asyncHandler(
 
 exports.delete_blog = asyncHandler(async (req, res, next) => {
   if (req.user && req.user.adminStatus === true) {
-    const blog = await Blog.findById(req.body.blogId).exec();
+    const blog = await Blog.findById(req.params.blogId).exec();
+    //delete comments first
     blog.commentsId.forEach(async (commentId) => {
       await Comment.findByIdAndDelete(commentId).exec();
     });
-    await Blog.findByIdAndDelete(req.body.blogId).exec();
+    //then we delete the blog
+    await Blog.findByIdAndDelete(req.params.blogId).exec();
     return res.status(200).json({ message: 'Blog and all Comment Deleted' });
   } else {
     return res.status(401).json({ message: 'Not Authorized' });
@@ -116,6 +118,19 @@ exports.update_blog_detail = asyncHandler(async (req, res, next) => {
     return res
       .status(200)
       .json({ message: 'Update Blog Successful', data: { blog: updatedBlog } });
+  } else {
+    return res.status(401).json({ message: 'Not Authorized' });
+  }
+});
+
+exports.delete_comment_from_blog = asyncHandler(async (req, res, next) => {
+  if (req.user && req.user.adminStatus === true) {
+    const comment = await Comment.findByIdAndDelete(req.body.commentId);
+    console.log(comment);
+    if (!comment) {
+      return res.status(404).json({ message: 'Not Found' });
+    }
+    return res.status(200).json({ message: 'Deleted Comment' });
   } else {
     return res.status(401).json({ message: 'Not Authorized' });
   }
