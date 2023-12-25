@@ -14,3 +14,31 @@ exports.blog_list = asyncHandler(async (req, res, next) => {
     return res.status(401).json({ message: 'Not Authorized' });
   }
 });
+
+exports.create_blog = asyncHandler(async (req, res, next) => {
+  if (req.user && req.user.adminStatus === true) {
+    if (!req.body.title || !req.body.description) {
+      return res
+        .status(400)
+        .json({ message: 'Please input all the required fields' });
+    }
+
+    // have to validate the input here actually but stil thinking whats the best way
+    //if every input already sanitized and escaped then create new blog
+    const newBlog = await Blog.create({
+      title: req.body.title,
+      description: req.body.description,
+      commentsId: [],
+      createdById: req.user._id,
+    });
+    return res
+      .status(201)
+      .json({
+        auth: true,
+        message: 'Blog succesfully created',
+        data: { blog: newBlog },
+      });
+  } else {
+    return res.status(401).json({ message: 'Not Authorized' });
+  }
+});

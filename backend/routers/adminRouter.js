@@ -7,11 +7,11 @@ const getUserFromToken = require('../utils/getUserFromToken');
 //get blog list from home page
 router.get('/', [verifyToken, getUserFromToken], adminController.blog_list);
 
+// create a blog from home page
+router.post('/', [verifyToken, getUserFromToken], adminController.create_blog);
+
 //delete a blog from home page
 // router.delete('/');
-
-// //create a blog from home page
-// router.post('/');
 
 // router.put();
 
