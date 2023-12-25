@@ -13,6 +13,7 @@ const blogSchema = new Schema(
     },
     commentsId: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
     createdById: { type: Schema.Types.ObjectId, ref: 'User' },
+    published: { type: Boolean, default: false },
   },
   {
     timestamps: true,

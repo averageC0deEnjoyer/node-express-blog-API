@@ -4,7 +4,9 @@ const Blog = require('../models/blogModel');
 const Comment = require('../models/commentModel');
 
 exports.blog_list = asyncHandler(async (req, res, next) => {
-  const blogList = await Blog.find({}, '-description').sort({ title: 1 });
+  const blogList = await Blog.find({ published: true }, '-description').sort({
+    title: 1,
+  });
   if (req.user) {
     return res.status(200).json({ auth: true, data: blogList, user: req.user });
   } else {
