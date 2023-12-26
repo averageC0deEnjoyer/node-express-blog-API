@@ -6,13 +6,13 @@ const signUpRouter = require('./routers/signUpRouter');
 const logInRouter = require('./routers/logInRouter');
 const adminRouter = require('./routers/adminRouter');
 
-// const cors = require('cors');
+const cors = require('cors');
 const { connectToDb } = require('./utils/connectDB');
 
 const app = express();
 
 app.use(express.json());
-// app.use(cors());
+app.use(cors());
 
 connectToDb().then(() => {
   app.listen(process.env.PORT, () => {
