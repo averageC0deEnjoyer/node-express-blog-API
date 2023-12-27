@@ -32,7 +32,7 @@ exports.sign_up_post = asyncHandler(async (req, res, next) => {
             lastName: req.body.lastName,
             username: req.body.username,
             password: hashedPassword,
-            //admin status default false so people cant signup with adminstatus true, have to from PUT route
+            //admin status default false so people cant signup with adminstatus === true(using postman to edit adminstatus === rtue), have to from PUT route to give admin access.
             adminStatus: false,
           });
           //also create token for subsequent request

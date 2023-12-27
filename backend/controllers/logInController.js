@@ -24,17 +24,23 @@ exports.log_in_post = asyncHandler(async (req, res, next) => {
           if (err) {
             return res.status(404).send({ message: err });
           }
-          return res.status(200).json({
-            message: 'Login Success',
-            user: {
-              firstName: user.firstName,
-              lastName: user.lastName,
-              username: user.username,
-              adminStatus: user.adminStatus,
-              id: user._id,
-            },
-            token: token,
-          });
+          return (
+            res
+              .status(200)
+              //how to use this header (save it at frontend?)
+              .header('x-auth-token', token)
+              .json({
+                message: 'Login Success',
+                user: {
+                  firstName: user.firstName,
+                  lastName: user.lastName,
+                  username: user.username,
+                  adminStatus: user.adminStatus,
+                  id: user._id,
+                },
+                token,
+              })
+          );
         }
       );
     }

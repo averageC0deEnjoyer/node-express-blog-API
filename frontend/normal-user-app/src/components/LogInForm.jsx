@@ -17,7 +17,7 @@ const LogInForm = () => {
       .post('http://localhost:3000/login', logInFormState, {
         headers: { 'Content-Type': 'application/json; charset=UTF-8' },
       })
-      .then((res) => console.log(res));
+      .then((res) => localStorage.setItem('token', 'Bearer ' + res.data.token));
   }
 
   return (
