@@ -4,6 +4,7 @@ import LogInForm from './components/LogInForm';
 import BlogList from './components/BlogList';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import BlogDetail from './components/BlogDetail';
 
 function App() {
   const [blogs, setBlogs] = useState([]);
@@ -35,8 +36,9 @@ function App() {
       <div>Hello world</div>
       <div>Hello world</div>
       {/* <SignUpForm /> */}
-      <SignUpForm />
-      <BlogList blogs={blogs} />
+      {/* <SignUpForm /> */}
+      {/* <BlogList blogs={blogs} /> */}
+      <BlogDetail />
     </>
   );
 }
