@@ -2,21 +2,20 @@ import { useEffect, useState, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { UserContext } from '../Contexts/UserContext';
 import NewCommentBox from './NewCommentBox';
+import UpdateComment from './UpdateComment';
 import axios from 'axios';
 
 const BlogDetail = () => {
   //later set up UseParams for ID
   // i think i need to setup state here to save the comment data , cause when i DELETE , the res i get is not the updated comment, only empty array
-  const [addNewCommentBox, setAddNewCommentBox] = useState(false);
-
-  const [commentsState, setCommentsState] = useState([]);
-  console.log(commentsState);
   const { user } = useContext(UserContext);
-
   const { _id: userId } = user;
-
+  const [addNewCommentBox, setAddNewCommentBox] = useState(false);
+  const [commentsState, setCommentsState] = useState([]);
   const [blogDetail, setBlogDetail] = useState({});
   const [loading, setLoading] = useState(true);
+  //to select which comment to update
+  const [updateCommentId, setUpdateCommentId] = useState('');
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -80,7 +79,30 @@ const BlogDetail = () => {
       });
   }
 
-  function handleUpdateComment(e) {}
+  function handleUpdateComment(e, commentId, commentText) {
+    axios
+      .put(
+        `http://localhost:3000/blogs/${id}`,
+        { commentId, commentText },
+        { headers: { Authorization: token } }
+      )
+      .then((res) => {
+        if (res.status === 200) {
+          const selectedComment = commentsState.find(
+            (comment) => comment._id === commentId
+          );
+          const updatedComment = {
+            ...selectedComment,
+            commentText: commentText,
+          };
+          const updatedCommentsArray = commentsState.map((comment) =>
+            comment._id === commentId ? updatedComment : comment
+          );
+          setCommentsState(updatedCommentsArray);
+        }
+      })
+      .catch((err) => console.log(err));
+  }
 
   if (loading) {
     return <div>Loading</div>;
@@ -124,27 +146,42 @@ const BlogDetail = () => {
       ) : (
         <ul>
           {/* rather than using the array from RESPONSE, we set state so that after every req, the component rerenders.  */}
-          {commentsState.map((comment) => (
-            <li key={comment._id}>
-              <div>{comment.commentText}</div>
-              <div>{comment.createdById.username}</div>
-              <div>{comment.createdAt}</div>
-              {userId === comment.createdById._id ? (
-                <>
-                  <button>Update</button>
-                  <button
-                    onClick={(e) => {
-                      handleDeleteComment(e, comment._id);
-                    }}
-                  >
-                    Delete
-                  </button>
-                </>
-              ) : (
-                ''
-              )}
-            </li>
-          ))}
+          {commentsState.map((comment) =>
+            comment._id !== updateCommentId ? (
+              <li key={comment._id}>
+                <div>{comment.commentText}</div>
+                <div>{comment.createdById.username}</div>
+                <div>{comment.createdAt}</div>
+                {userId === comment.createdById._id ? (
+                  <>
+                    <button
+                      onClick={() => {
+                        setUpdateCommentId(comment._id);
+                      }}
+                    >
+                      Update
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        handleDeleteComment(e, comment._id);
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </>
+                ) : (
+                  ''
+                )}
+              </li>
+            ) : (
+              <UpdateComment
+                comment={comment}
+                handleUpdateComment={handleUpdateComment}
+                setUpdateCommentId={setUpdateCommentId}
+                key={comment._id}
+              />
+            )
+          )}
         </ul>
       )}
     </>
