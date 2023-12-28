@@ -2,6 +2,9 @@ import './App.css';
 import SignUpForm from './components/SignUpForm';
 import LogInForm from './components/LogInForm';
 import BlogList from './components/BlogList';
+import BlogDetail from './components/BlogDetail';
+import UserLoggedIn from './components/UserLoggedIn';
+import Logout from './components/Logout';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 // import BlogDetail from './components/BlogDetail';
@@ -84,6 +87,10 @@ function App() {
               <Route index element={<BlogList blogs={blogs} />} />
               <Route path="signup" element={<SignUpForm />} />
               <Route path="login" element={<LogInForm />} />
+              <Route path="already-log-in" element={<UserLoggedIn />} />
+              <Route path="logout" element={<Logout />} />
+              <Route path="/blog/:id" element={<BlogDetail />} />
+              <Route path="*" element={<div>Not Available</div>} />
             </Routes>
           </main>
         </BrowserRouter>
