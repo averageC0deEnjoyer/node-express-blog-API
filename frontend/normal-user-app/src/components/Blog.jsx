@@ -1,11 +1,21 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Blog = ({ blog }) => {
-  const { title } = blog;
+  const { title, _id: id } = blog;
+  const navigate = useNavigate();
   return (
     <>
       <span>Blog: </span>
       <div>{title}</div>
+      <button
+        onClick={() => {
+          navigate(`/blog/${id}`);
+        }}
+      >
+        Detail
+      </button>
+      <br />
+      <br />
     </>
   );
 };
