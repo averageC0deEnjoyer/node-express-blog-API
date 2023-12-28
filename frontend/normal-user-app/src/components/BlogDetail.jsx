@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { UserContext } from '../Contexts/UserContext';
 import NewCommentBox from './NewCommentBox';
 import axios from 'axios';
 
@@ -9,6 +10,10 @@ const BlogDetail = () => {
   const [addNewCommentBox, setAddNewCommentBox] = useState(false);
 
   const [commentsState, setCommentsState] = useState([]);
+  console.log(commentsState);
+  const { user } = useContext(UserContext);
+
+  const { _id: userId } = user;
 
   const [blogDetail, setBlogDetail] = useState({});
   const [loading, setLoading] = useState(true);
@@ -24,7 +29,6 @@ const BlogDetail = () => {
         headers: { Authorization: token },
       })
       .then((res) => {
-        console.log(res);
         setBlogDetail(res.data.data.blogData.blogDetail);
         setLoading(false);
         setCommentsState(res.data.data.blogData.blogDetail.commentsId);
@@ -32,7 +36,7 @@ const BlogDetail = () => {
     //to satisfy linter
   }, [id, token]);
 
-  function addNewCommentFunc(e, commentText) {
+  function handleAddNewComment(e, commentText) {
     e.preventDefault();
     console.log(commentText);
     axios
@@ -56,6 +60,27 @@ const BlogDetail = () => {
         console.log(err);
       });
   }
+
+  function handleDeleteComment(e, commentId) {
+    axios
+      .delete(`http://localhost:3000/blogs/${id}`, {
+        headers: { Authorization: token },
+        data: { commentId },
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          const newCommentsArray = commentsState.filter(
+            (comment) => comment._id !== commentId
+          );
+          setCommentsState(newCommentsArray);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  function handleUpdateComment(e) {}
 
   if (loading) {
     return <div>Loading</div>;
@@ -89,7 +114,7 @@ const BlogDetail = () => {
       {addNewCommentBox ? (
         <NewCommentBox
           setAddNewCommentBox={setAddNewCommentBox}
-          addNewCommentFunc={addNewCommentFunc}
+          handleAddNewComment={handleAddNewComment}
         />
       ) : (
         ''
@@ -104,6 +129,20 @@ const BlogDetail = () => {
               <div>{comment.commentText}</div>
               <div>{comment.createdById.username}</div>
               <div>{comment.createdAt}</div>
+              {userId === comment.createdById._id ? (
+                <>
+                  <button>Update</button>
+                  <button
+                    onClick={(e) => {
+                      handleDeleteComment(e, comment._id);
+                    }}
+                  >
+                    Delete
+                  </button>
+                </>
+              ) : (
+                ''
+              )}
             </li>
           ))}
         </ul>
