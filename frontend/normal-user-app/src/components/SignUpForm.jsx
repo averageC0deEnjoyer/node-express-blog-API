@@ -1,7 +1,8 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { UserContext } from '../Contexts/UserContext';
 import { useNavigate } from 'react-router-dom';
+import UserLoggedIn from './UserLoggedIn';
 
 const SignUpForm = () => {
   const { user, setUser } = useContext(UserContext);
@@ -14,6 +15,12 @@ const SignUpForm = () => {
     username: '',
     password: '',
   });
+
+  useEffect(() => {
+    if (user) {
+      setTimeout(() => navigate('/'), 3000);
+    }
+  }, []);
 
   function onChange(event) {
     setSignUpFormState({
@@ -38,11 +45,9 @@ const SignUpForm = () => {
       .catch((err) => console.log(err));
   }
 
-  if (user) {
-    navigate('/');
-  }
-
-  return (
+  return user ? (
+    <UserLoggedIn />
+  ) : (
     <>
       <div>Hello worlds</div>
       <form onSubmit={handleSubmit} action="">
