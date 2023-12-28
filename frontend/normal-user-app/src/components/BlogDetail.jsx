@@ -19,12 +19,18 @@ const BlogDetail = () => {
 
   useEffect(() => {
     setLoading(true);
-    axios.get(`http://localhost:3000/blogs/${id}`).then((res) => {
-      console.log(res);
-      setBlogDetail(res.data.data.blogData.blogDetail);
-      setLoading(false);
-    });
-  }, [id]);
+    axios
+      .get(`http://localhost:3000/blogs/${id}`, {
+        headers: { Authorization: token },
+      })
+      .then((res) => {
+        console.log(res);
+        setBlogDetail(res.data.data.blogData.blogDetail);
+        setLoading(false);
+        setCommentsState(res.data.data.blogData.blogDetail.commentsId);
+      });
+    //to satisfy linter
+  }, [id, token]);
 
   function addNewCommentFunc(e, commentText) {
     e.preventDefault();
@@ -37,7 +43,12 @@ const BlogDetail = () => {
       )
       .then((res) => {
         if (res.status === 201) {
-          console.log(res);
+          setCommentsState([
+            ...commentsState,
+            res.data.data.blogData.blogDetail.commentsId[
+              res.data.data.blogData.blogDetail.commentsId.length - 1
+            ],
+          ]);
           setAddNewCommentBox(false);
         }
       })
@@ -50,8 +61,8 @@ const BlogDetail = () => {
     return <div>Loading</div>;
   }
 
-  const { title, description, commentsId } = blogDetail;
-  console.log(commentsId);
+  const { title, description } = blogDetail;
+
   return (
     <>
       <div>{title}</div>
@@ -83,15 +94,20 @@ const BlogDetail = () => {
       ) : (
         ''
       )}
-      <ul>
-        {commentsId?.map((comment) => (
-          <li key={comment._id}>
-            <div>{comment.commentText}</div>
-            <div>{comment.createdById.username}</div>
-            <div>{comment.createdAt}</div>
-          </li>
-        ))}
-      </ul>
+      {commentsState.length === 0 ? (
+        <div>No Comments Yet</div>
+      ) : (
+        <ul>
+          {/* rather than using the array from RESPONSE, we set state so that after every req, the component rerenders.  */}
+          {commentsState.map((comment) => (
+            <li key={comment._id}>
+              <div>{comment.commentText}</div>
+              <div>{comment.createdById.username}</div>
+              <div>{comment.createdAt}</div>
+            </li>
+          ))}
+        </ul>
+      )}
     </>
   );
 };
