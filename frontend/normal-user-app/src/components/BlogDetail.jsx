@@ -4,7 +4,7 @@ import axios from 'axios';
 const BlogDetail = () => {
   //later set up UseParams for ID
   const [blogDetail, setBlogDetail] = useState({});
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true);
@@ -30,7 +30,7 @@ const BlogDetail = () => {
       <div>Comment:</div>
       <ul>
         {commentsId?.map((comment) => (
-          <li>{comment.commentText}</li>
+          <li key={comment._id}>{comment.commentText}</li>
         ))}
       </ul>
     </>

@@ -1,8 +1,14 @@
-import React from 'react';
+import { useState, useContext } from 'react';
 import axios from 'axios';
+import { UserContext } from '../Contexts/UserContext';
+import { useNavigate } from 'react-router-dom';
 
 const SignUpForm = () => {
-  const [signUpFormState, setSignUpFormState] = React.useState({
+  const { user, setUser } = useContext(UserContext);
+
+  const navigate = useNavigate();
+
+  const [signUpFormState, setSignUpFormState] = useState({
     firstName: '',
     lastName: '',
     username: '',
@@ -23,8 +29,17 @@ const SignUpForm = () => {
       .post('http://localhost:3000/signup', signUpFormState, {
         headers: { 'Content-Type': 'application/json; charset=UTF-8' },
       })
-      .then((res) => localStorage.setItem('token', 'Bearer ' + res.data.token))
+      .then((res) => {
+        console.log(res);
+        localStorage.setItem('token', 'Bearer ' + res.data.token);
+        setUser(res.data.user);
+        navigate('/');
+      })
       .catch((err) => console.log(err));
+  }
+
+  if (user) {
+    navigate('/');
   }
 
   return (

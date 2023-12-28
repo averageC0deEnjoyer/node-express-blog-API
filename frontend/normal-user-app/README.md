@@ -12,4 +12,10 @@ fetch everything at App.js, then pass blog data as props (but in the backend i l
 
 OR
 
-like what i did right now, only pass the data that i need (in homepage doesnt need description), but the drawback is i have to fetch again when i access BlogDetail component.
+like what i did right now, only pass the data that i need (in homepage doesnt need description), but the drawback is i have to fetch again when i access BlogDetail component. but if i put at the App.js, everytime i fetch then will render all the component.
+
+//how to simple logout jwt
+
+//useeff app.js to check has token and if yes get user data
+
+// finish router
