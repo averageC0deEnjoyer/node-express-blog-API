@@ -4,7 +4,7 @@ import { UserContext } from '../Contexts/UserContext';
 import { useNavigate } from 'react-router-dom';
 import UserLoggedIn from './UserLoggedIn';
 
-import { Button, Form } from 'react-bootstrap';
+import { Button, Form, Container } from 'react-bootstrap';
 
 const LogInForm = () => {
   //use userContext
@@ -48,37 +48,47 @@ const LogInForm = () => {
   return user.username !== '' ? (
     <UserLoggedIn />
   ) : (
-    <Form>
-      <Form.Group>
-        <Form.Label>Username:</Form.Label>
-        <Form.Control
-          type="string"
-          name="username"
-          value={logInFormState.username}
-          onChange={onChange}
-          placeholder="enter username"
-          style={{ width: '15rem' }}
-        />
-      </Form.Group>
+    <Container className="ml-auto mr-auto d-flex justify-content-center align-items-center">
+      <Form
+        className="bg-dark rounded d-flex flex-column align-items-center justify-content-center py-3 gap-3"
+        style={{ width: '20rem' }}
+      >
+        <Form.Group className="text-center">
+          <Form.Label className="text-white">Username:</Form.Label>
+          <Form.Control
+            type="string"
+            name="username"
+            value={logInFormState.username}
+            onChange={onChange}
+            placeholder="enter username"
+            style={{ width: '17rem' }}
+          />
+        </Form.Group>
 
-      <Form.Group>
-        <Form.Label>Password:</Form.Label>
-        <Form.Control
-          type="password"
-          name="password"
-          value={logInFormState.password}
-          onChange={onChange}
-          placeholder="enter password"
-          style={{ width: '15rem' }}
-        />
-      </Form.Group>
+        <Form.Group className="text-center">
+          <Form.Label className="text-white">Password:</Form.Label>
+          <Form.Control
+            type="password"
+            name="password"
+            value={logInFormState.password}
+            onChange={onChange}
+            placeholder="enter password"
+            style={{ width: '17rem' }}
+          />
+        </Form.Group>
 
-      <Form.Group>
-        <Button variant="primary" type="submt" onClick={handleSubmit}>
-          Submit
-        </Button>
-      </Form.Group>
-    </Form>
+        <Form.Group className="text-center">
+          <Button
+            variant="primary"
+            type="submit"
+            className="bg-primary"
+            onClick={handleSubmit}
+          >
+            Submit
+          </Button>
+        </Form.Group>
+      </Form>
+    </Container>
   );
 };
 

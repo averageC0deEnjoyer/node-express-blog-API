@@ -54,11 +54,11 @@ const SignUpForm = () => {
       {/* for wrapper */}
       <Container className="ml-auto mr-auto d-flex justify-content-center align-items-center">
         <Form
-          className="bg-primary rounded d-flex flex-column align-items-center justify-content-center py-3 gap-3"
+          className="bg-dark rounded d-flex flex-column align-items-center justify-content-center py-3 gap-3"
           style={{ width: '20rem' }}
         >
           <Form.Group className="text-center">
-            <Form.Label>Firstname:</Form.Label>
+            <Form.Label className="text-white">Firstname:</Form.Label>
             <Form.Control
               type="string"
               name="firstName"
@@ -70,7 +70,7 @@ const SignUpForm = () => {
           </Form.Group>
 
           <Form.Group className="text-center">
-            <Form.Label>Lastname:</Form.Label>
+            <Form.Label className="text-white">Lastname:</Form.Label>
             <Form.Control
               type="string"
               name="lastName"
@@ -82,7 +82,7 @@ const SignUpForm = () => {
           </Form.Group>
 
           <Form.Group className="text-center">
-            <Form.Label>Username:</Form.Label>
+            <Form.Label className="text-white">Username:</Form.Label>
             <Form.Control
               type="string"
               name="username"
@@ -94,7 +94,7 @@ const SignUpForm = () => {
           </Form.Group>
 
           <Form.Group className="text-center">
-            <Form.Label>Password:</Form.Label>
+            <Form.Label className="text-white">Password:</Form.Label>
             <Form.Control
               type="password"
               name="password"
@@ -108,7 +108,7 @@ const SignUpForm = () => {
           <Form.Group className="text-center">
             <Button
               variant="primary"
-              className="bg-dark"
+              className="bg-primary"
               type="submit"
               onClick={handleSubmit}
             >
