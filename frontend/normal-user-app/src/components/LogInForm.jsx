@@ -4,7 +4,7 @@ import { UserContext } from '../Contexts/UserContext';
 import { useNavigate } from 'react-router-dom';
 import UserLoggedIn from './UserLoggedIn';
 
-import { Button, Form, Container } from 'react-bootstrap';
+import { Button, Form, Row } from 'react-bootstrap';
 
 const LogInForm = () => {
   //use userContext
@@ -48,7 +48,7 @@ const LogInForm = () => {
   return user.username !== '' ? (
     <UserLoggedIn />
   ) : (
-    <Container className="ml-auto mr-auto d-flex justify-content-center align-items-center">
+    <Row className="ml-auto mr-auto d-flex justify-content-center align-items-center flex-grow-1">
       <Form
         className="bg-dark rounded d-flex flex-column align-items-center justify-content-center py-3 gap-3"
         style={{ width: '20rem' }}
@@ -88,7 +88,7 @@ const LogInForm = () => {
           </Button>
         </Form.Group>
       </Form>
-    </Container>
+    </Row>
   );
 };
 

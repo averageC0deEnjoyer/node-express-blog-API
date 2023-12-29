@@ -3,7 +3,7 @@ import axios from 'axios';
 import { UserContext } from '../Contexts/UserContext';
 import { useNavigate } from 'react-router-dom';
 import UserLoggedIn from './UserLoggedIn';
-import { Form, Button, Container } from 'react-bootstrap';
+import { Form, Button, Container, Row } from 'react-bootstrap';
 
 const SignUpForm = () => {
   const { user, setUser } = useContext(UserContext);
@@ -52,7 +52,7 @@ const SignUpForm = () => {
   ) : (
     <>
       {/* for wrapper */}
-      <Container className="ml-auto mr-auto d-flex justify-content-center align-items-center">
+      <Row className="ml-auto mr-auto d-flex justify-content-center align-items-center flex-grow-1">
         <Form
           className="bg-dark rounded d-flex flex-column align-items-center justify-content-center py-3 gap-3"
           style={{ width: '20rem' }}
@@ -116,7 +116,7 @@ const SignUpForm = () => {
             </Button>
           </Form.Group>
         </Form>
-      </Container>
+      </Row>
     </>
   );
 };

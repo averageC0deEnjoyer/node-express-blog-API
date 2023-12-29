@@ -76,40 +76,43 @@ function App() {
     <>
       <UserContext.Provider value={{ user, setUser }}>
         <BrowserRouter>
-          <Navbar expand="lg" className="bg-body-tertiary" fixed="top">
-            <Container>
-              <Navbar.Brand as={NavLink} to="/">
-                Blog? List!{' '}
-                {user.username !== ''
-                  ? `Hello ${user.username}`
-                  : 'Hello Anon!'}
-              </Navbar.Brand>
-              <Navbar.Toggle aria-controls="basic-navbar-nav" />
-              <Navbar.Collapse id="basic-navbar-nav">
-                <Nav className="ms-auto">
-                  <Nav.Link as={NavLink} to="/">
-                    Home
-                  </Nav.Link>
-                  {user.username !== '' ? (
-                    <Nav.Link as={NavLink} to="logout">
-                      Log Out{' '}
-                    </Nav.Link>
-                  ) : (
-                    <>
-                      <Nav.Link as={NavLink} to="signup">
-                        Sign Up{' '}
+          <div className="container-fluid d-flex flex-column h-100 p-0">
+            <header>
+              <Navbar expand="lg" className="bg-body-tertiary" fixed="top">
+                <Container>
+                  <Navbar.Brand as={NavLink} to="/">
+                    Blog? List!{' '}
+                    {user.username !== ''
+                      ? `Hello ${user.username}`
+                      : 'Hello Anon!'}
+                  </Navbar.Brand>
+                  <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                  <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav className="ms-auto">
+                      <Nav.Link as={NavLink} to="/">
+                        Home
                       </Nav.Link>
-                      <Nav.Link as={NavLink} to="login">
-                        Log In{' '}
-                      </Nav.Link>
-                    </>
-                  )}
-                </Nav>
-              </Navbar.Collapse>
-            </Container>
-          </Navbar>
-          <main>
-            <Container className="p-3 mt-5">
+                      {user.username !== '' ? (
+                        <Nav.Link as={NavLink} to="logout">
+                          Log Out{' '}
+                        </Nav.Link>
+                      ) : (
+                        <>
+                          <Nav.Link as={NavLink} to="signup">
+                            Sign Up{' '}
+                          </Nav.Link>
+                          <Nav.Link as={NavLink} to="login">
+                            Log In{' '}
+                          </Nav.Link>
+                        </>
+                      )}
+                    </Nav>
+                  </Navbar.Collapse>
+                </Container>
+              </Navbar>
+            </header>
+
+            <Container className="flex-grow-1 p-3 mt-5 d-flex flex-column">
               <Routes>
                 <Route index element={<BlogList blogs={blogs} />} />
                 <Route path="signup" element={<SignUpForm />} />
@@ -120,12 +123,16 @@ function App() {
                 <Route path="*" element={<div>Not Available</div>} />
               </Routes>
             </Container>
-          </main>
-          <footer>
-            <Container fixed="bottom">
-              <p>test</p>
-            </Container>
-          </footer>
+
+            <footer className="py-4 mt-5 bg-dark">
+              <div className="container-fluid px-4 px-lg-5">
+                <p className="text-white m-0 text-center">
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                  Ipsa, iure?
+                </p>
+              </div>
+            </footer>
+          </div>
         </BrowserRouter>
       </UserContext.Provider>
     </>
