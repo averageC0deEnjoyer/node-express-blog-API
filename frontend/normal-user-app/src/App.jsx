@@ -7,16 +7,26 @@ import UserLoggedIn from './components/UserLoggedIn';
 import Logout from './components/Logout';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-// import BlogDetail from './components/BlogDetail';
-import { BrowserRouter, Routes, Route, Link, NavLink } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom';
 import { UserContext } from './Contexts/UserContext';
 
-//dont forget when logout , clear localStorage and clear user state
+//for bootstrap
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+
 function App() {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [user, setUser] = useState();
+  const [user, setUser] = useState({
+    _id: '',
+    firstName: '',
+    lastName: '',
+    username: '',
+  });
 
   //to fetch data
   //later can implement pagination
@@ -36,6 +46,7 @@ function App() {
           setLoading(false);
           setError('');
           setUser(res.data.user);
+          console.log(res.data.user);
         })
         .catch((err) => {
           setError(err);
@@ -67,21 +78,25 @@ function App() {
     <>
       <UserContext.Provider value={{ user, setUser }}>
         <BrowserRouter>
-          <header>
-            <nav>
-              <h1>Blog ? List !</h1>
-              <h1>Hello {user?.firstName || `Anonymous!`}</h1>
-              <Link to="/">Home </Link>
-              {user ? (
-                <NavLink to="logout">Log Out </NavLink>
-              ) : (
-                <>
-                  <NavLink to="signup">Sign Up </NavLink>
-                  <NavLink to="login">Log In </NavLink>
-                </>
-              )}
-            </nav>
-          </header>
+          <Navbar expand="lg" className="bg-body-tertiary" fixed="top">
+            <Container>
+              <Navbar.Brand href="/">Blog? List!</Navbar.Brand>
+              <Navbar.Toggle aria-controls="basic-navbar-nav" />
+              <Navbar.Collapse id="basic-navbar-nav">
+                <Nav className="me-auto">
+                  <Nav.Link href="/">Home</Nav.Link>
+                  {user.username !== '' ? (
+                    <Nav.Link href="logout">Log Out </Nav.Link>
+                  ) : (
+                    <>
+                      <Nav.Link href="signup">Sign Up </Nav.Link>
+                      <Nav.Link href="login">Log In </Nav.Link>
+                    </>
+                  )}
+                </Nav>
+              </Navbar.Collapse>
+            </Container>
+          </Navbar>
           <main>
             <Routes>
               <Route index element={<BlogList blogs={blogs} />} />

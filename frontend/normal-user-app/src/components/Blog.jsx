@@ -11,6 +11,7 @@ const Blog = ({ blog }) => {
         onClick={() => {
           navigate(`/blog/${id}`);
         }}
+        className="btn btn-primary"
       >
         Detail
       </button>

@@ -45,7 +45,7 @@ const SignUpForm = () => {
       .catch((err) => console.log(err));
   }
 
-  return user ? (
+  return user.username !== '' ? (
     <UserLoggedIn />
   ) : (
     <>

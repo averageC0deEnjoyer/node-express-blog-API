@@ -16,7 +16,7 @@ const LogInForm = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user) {
+    if (user.username !== '') {
       setTimeout(() => {
         navigate('/');
       }, 3000);
@@ -43,7 +43,7 @@ const LogInForm = () => {
       });
   }
   // i use like this so it wont render the form even for 0.something seconds (before i just navigate('/already-log-in') in the useEffect and show the form)
-  return user ? (
+  return user.username !== '' ? (
     <UserLoggedIn />
   ) : (
     <form onSubmit={handleSubmit} action="">

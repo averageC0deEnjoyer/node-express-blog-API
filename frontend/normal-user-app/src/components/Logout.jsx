@@ -16,7 +16,7 @@ const Logout = () => {
   function handleClick(e) {
     if (token) {
       localStorage.removeItem('token');
-      setUser();
+      setUser({ _id: '', firstName: '', lastName: '', username: '' });
       navigate('/');
     }
   }

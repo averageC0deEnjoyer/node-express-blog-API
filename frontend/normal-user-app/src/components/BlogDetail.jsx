@@ -9,7 +9,9 @@ const BlogDetail = () => {
   //later set up UseParams for ID
   // i think i need to setup state here to save the comment data , cause when i DELETE , the res i get is not the updated comment, only empty array
   const { user } = useContext(UserContext);
+
   const { _id: userId } = user;
+
   const [addNewCommentBox, setAddNewCommentBox] = useState(false);
   const [commentsState, setCommentsState] = useState([]);
   const [blogDetail, setBlogDetail] = useState({});
@@ -18,6 +20,8 @@ const BlogDetail = () => {
   const [updateCommentId, setUpdateCommentId] = useState('');
   const { id } = useParams();
   const navigate = useNavigate();
+
+  console.log(commentsState);
 
   const token = localStorage.getItem('token');
 
@@ -37,7 +41,6 @@ const BlogDetail = () => {
 
   function handleAddNewComment(e, commentText) {
     e.preventDefault();
-    console.log(commentText);
     axios
       .post(
         `http://localhost:3000/blogs/${id}`,
@@ -78,7 +81,6 @@ const BlogDetail = () => {
         console.log(err);
       });
   }
-
   function handleUpdateComment(e, commentId, commentText) {
     axios
       .put(
@@ -88,12 +90,15 @@ const BlogDetail = () => {
       )
       .then((res) => {
         if (res.status === 200) {
+          //to update updatedAt
+          const date = new Date();
           const selectedComment = commentsState.find(
             (comment) => comment._id === commentId
           );
           const updatedComment = {
             ...selectedComment,
             commentText: commentText,
+            updatedAt: date.toISOString(),
           };
           const updatedCommentsArray = commentsState.map((comment) =>
             comment._id === commentId ? updatedComment : comment
@@ -109,7 +114,6 @@ const BlogDetail = () => {
   }
 
   const { title, description } = blogDetail;
-
   return (
     <>
       <div>{title}</div>
@@ -151,7 +155,7 @@ const BlogDetail = () => {
               <li key={comment._id}>
                 <div>{comment.commentText}</div>
                 <div>{comment.createdById.username}</div>
-                <div>{comment.createdAt}</div>
+                <div>{comment.updatedAt}</div>
                 {userId === comment.createdById._id ? (
                   <>
                     <button
