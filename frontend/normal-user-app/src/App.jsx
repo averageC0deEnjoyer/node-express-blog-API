@@ -79,7 +79,10 @@ function App() {
           <Navbar expand="lg" className="bg-body-tertiary" fixed="top">
             <Container>
               <Navbar.Brand as={NavLink} to="/">
-                Blog? List!
+                Blog? List!{' '}
+                {user.username !== ''
+                  ? `Hello ${user.username}`
+                  : 'Hello Anon!'}
               </Navbar.Brand>
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav">
@@ -106,16 +109,23 @@ function App() {
             </Container>
           </Navbar>
           <main>
-            <Routes>
-              <Route index element={<BlogList blogs={blogs} />} />
-              <Route path="signup" element={<SignUpForm />} />
-              <Route path="login" element={<LogInForm />} />
-              <Route path="already-log-in" element={<UserLoggedIn />} />
-              <Route path="logout" element={<Logout />} />
-              <Route path="/blog/:id" element={<BlogDetail />} />
-              <Route path="*" element={<div>Not Available</div>} />
-            </Routes>
+            <Container className="p-3 mt-5">
+              <Routes>
+                <Route index element={<BlogList blogs={blogs} />} />
+                <Route path="signup" element={<SignUpForm />} />
+                <Route path="login" element={<LogInForm />} />
+                <Route path="already-log-in" element={<UserLoggedIn />} />
+                <Route path="logout" element={<Logout />} />
+                <Route path="/blog/:id" element={<BlogDetail />} />
+                <Route path="*" element={<div>Not Available</div>} />
+              </Routes>
+            </Container>
           </main>
+          <footer>
+            <Container fixed="bottom">
+              <p>test</p>
+            </Container>
+          </footer>
         </BrowserRouter>
       </UserContext.Provider>
     </>

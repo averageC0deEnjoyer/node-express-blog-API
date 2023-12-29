@@ -19,3 +19,5 @@ like what i did right now, only pass the data that i need (in homepage doesnt ne
 //useeff app.js to check has token and if yes get user data
 
 // finish router
+
+//dont forget to reset app.css index.css

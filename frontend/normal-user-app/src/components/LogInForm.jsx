@@ -4,6 +4,8 @@ import { UserContext } from '../Contexts/UserContext';
 import { useNavigate } from 'react-router-dom';
 import UserLoggedIn from './UserLoggedIn';
 
+import { Button, Form } from 'react-bootstrap';
+
 const LogInForm = () => {
   //use userContext
   const { user, setUser } = useContext(UserContext);
@@ -46,25 +48,37 @@ const LogInForm = () => {
   return user.username !== '' ? (
     <UserLoggedIn />
   ) : (
-    <form onSubmit={handleSubmit} action="">
-      <label htmlFor="username">Username: </label>
-      <input
-        id="username"
-        name="username"
-        placeholder="input your username here"
-        value={logInFormState.username}
-        onChange={onChange}
-      />
-      <label htmlFor="password">Password: </label>
-      <input
-        id="password"
-        name="password"
-        placeholder="input your password here"
-        value={logInFormState.password}
-        onChange={onChange}
-      />
-      <button type="Submit">Submit</button>
-    </form>
+    <Form>
+      <Form.Group>
+        <Form.Label>Username:</Form.Label>
+        <Form.Control
+          type="string"
+          name="username"
+          value={logInFormState.username}
+          onChange={onChange}
+          placeholder="enter username"
+          style={{ width: '15rem' }}
+        />
+      </Form.Group>
+
+      <Form.Group>
+        <Form.Label>Password:</Form.Label>
+        <Form.Control
+          type="password"
+          name="password"
+          value={logInFormState.password}
+          onChange={onChange}
+          placeholder="enter password"
+          style={{ width: '15rem' }}
+        />
+      </Form.Group>
+
+      <Form.Group>
+        <Button variant="primary" type="submt" onClick={handleSubmit}>
+          Submit
+        </Button>
+      </Form.Group>
+    </Form>
   );
 };
 

@@ -7,9 +7,13 @@ const Blog = ({ blog }) => {
   return (
     <>
       <Card style={{ width: '20rem' }} className="m-3">
-        <Card.Img variant="top" src={`http://localhost:3000/${imageText}`} />
-        <Card.Body>
-          <Card.Title>{title}</Card.Title>
+        <Card.Img
+          variant="top"
+          src={`http://localhost:3000/${imageText}`}
+          className="p-3"
+        />
+        <Card.Body className="text-center">
+          <Card.Title className="text-truncate">{title}</Card.Title>
           <Card.Text>
             {' '}
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae,
@@ -20,7 +24,7 @@ const Blog = ({ blog }) => {
             onClick={() => {
               navigate(`/blog/${id}`);
             }}
-            className="btn btn-primary"
+            className="btn btn-primary text-center"
           >
             Detail
           </Button>

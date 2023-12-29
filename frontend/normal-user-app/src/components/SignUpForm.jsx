@@ -3,6 +3,7 @@ import axios from 'axios';
 import { UserContext } from '../Contexts/UserContext';
 import { useNavigate } from 'react-router-dom';
 import UserLoggedIn from './UserLoggedIn';
+import { Form, Button, Container } from 'react-bootstrap';
 
 const SignUpForm = () => {
   const { user, setUser } = useContext(UserContext);
@@ -16,8 +17,10 @@ const SignUpForm = () => {
     password: '',
   });
 
+  console.log(signUpFormState);
+
   useEffect(() => {
-    if (user) {
+    if (user.username !== '') {
       setTimeout(() => navigate('/'), 3000);
     }
   }, []);
@@ -48,44 +51,72 @@ const SignUpForm = () => {
     <UserLoggedIn />
   ) : (
     <>
-      <div>Hello worlds</div>
-      <form onSubmit={handleSubmit} action="">
-        <label htmlFor="firstName">Firstname: </label>
-        <input
-          name="firstName"
-          placeholder="John"
-          id="firstName"
-          type="text"
-          onChange={onChange}
-          value={signUpFormState.firstName}
-        />
-        <label htmlFor="lastName">Lastname: </label>
-        <input
-          name="lastName"
-          placeholder="Doe"
-          id="lastName"
-          type="text"
-          onChange={onChange}
-          value={signUpFormState.lastName}
-        />
-        <label htmlFor="username">Username: </label>
-        <input
-          name="username"
-          id="username"
-          type="text"
-          onChange={onChange}
-          value={signUpFormState.username}
-        />
-        <label htmlFor="password">Password: </label>
-        <input
-          name="password"
-          id="password"
-          type="password"
-          onChange={onChange}
-          value={signUpFormState.password}
-        />
-        <button type="submit">Submit</button>
-      </form>
+      {/* for wrapper */}
+      <Container className="ml-auto mr-auto d-flex justify-content-center align-items-center">
+        <Form
+          className="bg-primary rounded d-flex flex-column align-items-center justify-content-center py-3 gap-3"
+          style={{ width: '20rem' }}
+        >
+          <Form.Group className="text-center">
+            <Form.Label>Firstname:</Form.Label>
+            <Form.Control
+              type="string"
+              name="firstName"
+              value={signUpFormState.firstname}
+              onChange={onChange}
+              placeholder="enter firstname"
+              style={{ width: '17rem' }}
+            />
+          </Form.Group>
+
+          <Form.Group className="text-center">
+            <Form.Label>Lastname:</Form.Label>
+            <Form.Control
+              type="string"
+              name="lastName"
+              value={signUpFormState.lastname}
+              onChange={onChange}
+              placeholder="enter lastname"
+              style={{ width: '17rem' }}
+            />
+          </Form.Group>
+
+          <Form.Group className="text-center">
+            <Form.Label>Username:</Form.Label>
+            <Form.Control
+              type="string"
+              name="username"
+              value={signUpFormState.username}
+              onChange={onChange}
+              placeholder="enter username"
+              style={{ width: '17rem' }}
+            />
+          </Form.Group>
+
+          <Form.Group className="text-center">
+            <Form.Label>Password:</Form.Label>
+            <Form.Control
+              type="password"
+              name="password"
+              value={signUpFormState.password}
+              onChange={onChange}
+              placeholder="enter password"
+              style={{ width: '17rem' }}
+            />
+          </Form.Group>
+
+          <Form.Group className="text-center">
+            <Button
+              variant="primary"
+              className="bg-dark"
+              type="submit"
+              onClick={handleSubmit}
+            >
+              Submit
+            </Button>
+          </Form.Group>
+        </Form>
+      </Container>
     </>
   );
 };
