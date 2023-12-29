@@ -1,5 +1,5 @@
 import { useState } from 'react';
-
+import { Form, Button } from 'react-bootstrap';
 const NewCommentBox = ({ setAddNewCommentBox, handleAddNewComment }) => {
   const [commentState, setCommentState] = useState('');
   //after submit new comment, then we want to close the box so we pass the setAddNewCommentBox down
@@ -7,9 +7,9 @@ const NewCommentBox = ({ setAddNewCommentBox, handleAddNewComment }) => {
 
   return (
     <>
-      <form>
-        <label htmlFor="commentText" />
-        <input
+      <Form className="d-flex flex-column justify-content-center align-items-center gap-3">
+        <Form.Label htmlFor="commentText">Add your comment: </Form.Label>
+        <Form.Control
           name="commentText"
           id="commentText"
           type="text"
@@ -18,7 +18,7 @@ const NewCommentBox = ({ setAddNewCommentBox, handleAddNewComment }) => {
             setCommentState(e.target.value);
           }}
         />
-        <button
+        <Button
           type="submit"
           onClick={(e) => {
             handleAddNewComment(e, commentState);
@@ -26,9 +26,9 @@ const NewCommentBox = ({ setAddNewCommentBox, handleAddNewComment }) => {
           }}
         >
           Add Comment
-        </button>
-      </form>
-      <button onClick={() => setAddNewCommentBox(false)}>Cancel</button>
+        </Button>
+        <Button onClick={() => setAddNewCommentBox(false)}>Cancel</Button>
+      </Form>
     </>
   );
 };

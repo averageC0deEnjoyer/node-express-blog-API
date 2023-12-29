@@ -5,6 +5,8 @@ import NewCommentBox from './NewCommentBox';
 import UpdateComment from './UpdateComment';
 import axios from 'axios';
 
+import { Image, Container, Row, Col, Button, Card } from 'react-bootstrap';
+
 const BlogDetail = () => {
   //later set up UseParams for ID
   // i think i need to setup state here to save the comment data , cause when i DELETE , the res i get is not the updated comment, only empty array
@@ -111,17 +113,31 @@ const BlogDetail = () => {
     return <div>Loading</div>;
   }
 
-  const { title, description } = blogDetail;
+  const { title, description, imageText } = blogDetail;
+
   return (
-    <>
-      <div>{title}</div>
-      <div>{description}</div>
+    <div className="d-flex flex-column justify-content-center align-items-center">
+      <Container>
+        <Row>
+          <Col md={7} className="d-flex justify-content-center">
+            <Image src={`http://localhost:3000/${imageText}`} fluid rounded />
+          </Col>
+          <Col
+            md={5}
+            className="d-flex flex-column justify-content-center align-items-center"
+          >
+            <div className="h1 text-center">{title}</div>
+            <div className="text-center">{description}</div>
+          </Col>
+        </Row>
+      </Container>
       <br />
-      <div>Comment:</div>
+      <div className="h4">All Comments:</div>
 
       {/* this button to toggle the new comment box. but if no token found, then we redirect/navigate to login so user have to login first */}
       {!addNewCommentBox ? (
-        <button
+        <Button
+          style={{ width: '15rem' }}
           onClick={() => {
             if (!token) {
               navigate('/login');
@@ -129,9 +145,10 @@ const BlogDetail = () => {
               setAddNewCommentBox(true);
             }
           }}
+          className="rounded-pill"
         >
           Add New Comment
-        </button>
+        </Button>
       ) : (
         ''
       )}
@@ -144,37 +161,47 @@ const BlogDetail = () => {
         ''
       )}
       {commentsState.length === 0 ? (
-        <div>No Comments Yet</div>
+        <div className="h3">No Comments Yet</div>
       ) : (
-        <ul>
+        <>
           {/* rather than using the array from RESPONSE, we set state so that after every req, the component rerenders.  */}
           {commentsState.map((comment) =>
             comment._id !== updateCommentId ? (
-              <li key={comment._id}>
-                <div>{comment.commentText}</div>
-                <div>{comment.createdById.username}</div>
-                <div>{comment.updatedAt}</div>
+              <Card
+                style={{ width: '15rem' }}
+                className="m-3 text-center p-2"
+                key={comment._id}
+              >
+                <Card.Text>Comment: {comment.commentText}</Card.Text>
+                <Card.Text>
+                  Created By: {comment.createdById.username}
+                </Card.Text>
+                <Card.Text>Updated At: {comment.updatedAt}</Card.Text>
                 {userId === comment.createdById._id ? (
                   <>
-                    <button
+                    <Button
                       onClick={() => {
                         setUpdateCommentId(comment._id);
                       }}
+                      style={{ width: '7rem' }}
+                      className="ms-auto me-auto mb-2"
                     >
                       Update
-                    </button>
-                    <button
+                    </Button>
+                    <Button
                       onClick={(e) => {
                         handleDeleteComment(e, comment._id);
                       }}
+                      style={{ width: '7rem' }}
+                      className="ms-auto me-auto"
                     >
                       Delete
-                    </button>
+                    </Button>
                   </>
                 ) : (
                   ''
                 )}
-              </li>
+              </Card>
             ) : (
               <UpdateComment
                 comment={comment}
@@ -184,9 +211,9 @@ const BlogDetail = () => {
               />
             )
           )}
-        </ul>
+        </>
       )}
-    </>
+    </div>
   );
 };
 

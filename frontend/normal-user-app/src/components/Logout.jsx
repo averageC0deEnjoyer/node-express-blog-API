@@ -21,17 +21,25 @@ const Logout = () => {
     }
   }
   return token ? (
-    <>
-      <div>Are you sure you want to log out?</div>
-      <button onClick={handleClick}>Log Out</button>
+    <div className="d-flex flex-column justify-content-center align-items-center gap-3">
+      <h3 className="text-center">Are you sure you want to log out?</h3>
+      <button
+        onClick={handleClick}
+        style={{ width: '10rem' }}
+        className="btn bg-primary text-white"
+      >
+        Log Out
+      </button>
       <button
         onClick={() => {
           navigate('/');
         }}
+        style={{ width: '10rem' }}
+        className="btn bg-primary text-white"
       >
         Back to Home
       </button>
-    </>
+    </div>
   ) : (
     <div> You are anonymous </div>
   );

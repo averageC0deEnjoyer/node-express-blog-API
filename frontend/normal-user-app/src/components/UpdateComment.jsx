@@ -10,16 +10,20 @@ const UpdateComment = ({
   );
   return (
     <>
-      <label htmlFor="commentText" />
-      <input
-        type="text"
-        name="commentText"
-        id="commentText"
-        value={latestCommentState}
-        onChange={(e) => {
-          setLatestCommentState(e.target.value);
-        }}
-      />
+      <div className="form-group text-center">
+        <label htmlFor="commentText" className="text-center">
+          Update Comment Here:
+        </label>
+        <input
+          type="text"
+          name="commentText"
+          id="commentText"
+          value={latestCommentState}
+          onChange={(e) => {
+            setLatestCommentState(e.target.value);
+          }}
+        />
+      </div>
       <button
         onClick={(e) => {
           handleUpdateComment(e, comment._id, latestCommentState);
@@ -27,6 +31,7 @@ const UpdateComment = ({
           //to close the update comment box
           setUpdateCommentId('');
         }}
+        className="btn bg-primary rounded-pill text-white mt-2"
       >
         Update Comment
       </button>

@@ -77,7 +77,7 @@ function App() {
       <UserContext.Provider value={{ user, setUser }}>
         <BrowserRouter>
           <div className="container-fluid d-flex flex-column h-100 p-0">
-            <header>
+            <header className="mb-3 mb-md-4">
               <Navbar expand="lg" className="bg-body-tertiary" fixed="top">
                 <Container>
                   <Navbar.Brand as={NavLink} to="/">
@@ -112,7 +112,7 @@ function App() {
               </Navbar>
             </header>
 
-            <Container className="flex-grow-1 p-3 mt-5 d-flex flex-column">
+            <Container className="flex-grow-1 p-2 mt-5 d-flex flex-column">
               <Routes>
                 <Route index element={<BlogList blogs={blogs} />} />
                 <Route path="signup" element={<SignUpForm />} />
@@ -126,10 +126,7 @@ function App() {
 
             <footer className="py-4 mt-5 bg-dark">
               <div className="container-fluid px-4 px-lg-5">
-                <p className="text-white m-0 text-center">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                  Ipsa, iure?
-                </p>
+                <p className="text-white m-0 text-center">some Footer</p>
               </div>
             </footer>
           </div>
