@@ -21,8 +21,6 @@ const BlogDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  console.log(commentsState);
-
   const token = localStorage.getItem('token');
 
   useEffect(() => {

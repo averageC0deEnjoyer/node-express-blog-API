@@ -37,7 +37,6 @@ const SignUpForm = () => {
         headers: { 'Content-Type': 'application/json; charset=UTF-8' },
       })
       .then((res) => {
-        console.log(res);
         localStorage.setItem('token', 'Bearer ' + res.data.token);
         setUser(res.data.user);
         navigate('/');

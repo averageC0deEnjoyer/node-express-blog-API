@@ -7,7 +7,7 @@ import UserLoggedIn from './components/UserLoggedIn';
 import Logout from './components/Logout';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, NavLink, Link } from 'react-router-dom';
 import { UserContext } from './Contexts/UserContext';
 
 //for bootstrap
@@ -15,7 +15,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 
 function App() {
   const [blogs, setBlogs] = useState([]);
@@ -46,7 +45,6 @@ function App() {
           setLoading(false);
           setError('');
           setUser(res.data.user);
-          console.log(res.data.user);
         })
         .catch((err) => {
           setError(err);
@@ -80,17 +78,27 @@ function App() {
         <BrowserRouter>
           <Navbar expand="lg" className="bg-body-tertiary" fixed="top">
             <Container>
-              <Navbar.Brand href="/">Blog? List!</Navbar.Brand>
+              <Navbar.Brand as={NavLink} to="/">
+                Blog? List!
+              </Navbar.Brand>
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
               <Navbar.Collapse id="basic-navbar-nav">
-                <Nav className="me-auto">
-                  <Nav.Link href="/">Home</Nav.Link>
+                <Nav className="ms-auto">
+                  <Nav.Link as={NavLink} to="/">
+                    Home
+                  </Nav.Link>
                   {user.username !== '' ? (
-                    <Nav.Link href="logout">Log Out </Nav.Link>
+                    <Nav.Link as={NavLink} to="logout">
+                      Log Out{' '}
+                    </Nav.Link>
                   ) : (
                     <>
-                      <Nav.Link href="signup">Sign Up </Nav.Link>
-                      <Nav.Link href="login">Log In </Nav.Link>
+                      <Nav.Link as={NavLink} to="signup">
+                        Sign Up{' '}
+                      </Nav.Link>
+                      <Nav.Link as={NavLink} to="login">
+                        Log In{' '}
+                      </Nav.Link>
                     </>
                   )}
                 </Nav>
