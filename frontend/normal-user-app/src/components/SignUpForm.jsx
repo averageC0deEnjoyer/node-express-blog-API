@@ -36,9 +36,13 @@ const SignUpForm = () => {
     e.preventDefault();
 
     axios
-      .post('http://localhost:3000/signup', signUpFormState, {
-        headers: { 'Content-Type': 'application/json; charset=UTF-8' },
-      })
+      .post(
+        'https://simple-bloglist-example-ace.onrender.com/signup',
+        signUpFormState,
+        {
+          headers: { 'Content-Type': 'application/json; charset=UTF-8' },
+        }
+      )
       .then((res) => {
         localStorage.setItem('token', 'Bearer ' + res.data.token);
         setUser(res.data.user);

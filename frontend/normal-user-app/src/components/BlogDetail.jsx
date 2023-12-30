@@ -28,7 +28,7 @@ const BlogDetail = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`http://localhost:3000/blogs/${id}`, {
+      .get(`https://simple-bloglist-example-ace.onrender.com/blogs/${id}`, {
         headers: { Authorization: token },
       })
       .then((res) => {
@@ -43,7 +43,7 @@ const BlogDetail = () => {
     e.preventDefault();
     axios
       .post(
-        `http://localhost:3000/blogs/${id}`,
+        `https://simple-bloglist-example-ace.onrender.com/blogs/${id}`,
         { commentText: commentText },
         { headers: { Authorization: token } }
       )
@@ -65,7 +65,7 @@ const BlogDetail = () => {
 
   function handleDeleteComment(e, commentId) {
     axios
-      .delete(`http://localhost:3000/blogs/${id}`, {
+      .delete(`https://simple-bloglist-example-ace.onrender.com/blogs/${id}`, {
         headers: { Authorization: token },
         data: { commentId },
       })
@@ -84,7 +84,7 @@ const BlogDetail = () => {
   function handleUpdateComment(e, commentId, commentText) {
     axios
       .put(
-        `http://localhost:3000/blogs/${id}`,
+        `https://simple-bloglist-example-ace.onrender.com/blogs/${id}`,
         { commentId, commentText },
         { headers: { Authorization: token } }
       )
@@ -120,7 +120,7 @@ const BlogDetail = () => {
       <Container>
         <Row>
           <Col md={7} className="d-flex justify-content-center">
-            <Image src={`http://localhost:3000/${imageText}`} fluid rounded />
+            <Image src={`https://simple-bloglist-example-ace.onrender.com/${imageText}`} fluid rounded />
           </Col>
           <Col
             md={5}

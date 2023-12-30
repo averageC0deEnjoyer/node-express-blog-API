@@ -35,7 +35,7 @@ function App() {
     const token = localStorage.getItem('token');
     if (token) {
       axios
-        .get('http://localhost:3000/blogs', {
+        .get('https://simple-bloglist-example-ace.onrender.com/blogs', {
           headers: {
             Authorization: token,
           },
@@ -52,7 +52,7 @@ function App() {
         });
     } else {
       axios
-        .get('http://localhost:3000/blogs')
+        .get('https://simple-bloglist-example-ace.onrender.com/blogs')
         .then((res) => {
           setBlogs(res.data.data);
           setLoading(false);
