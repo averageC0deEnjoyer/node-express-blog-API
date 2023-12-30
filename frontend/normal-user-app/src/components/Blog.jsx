@@ -9,7 +9,7 @@ const Blog = ({ blog }) => {
       <Card style={{ width: '20rem' }} className="m-3">
         <Card.Img
           variant="top"
-          src={`http://localhost:3000/${imageText}`}
+          src={`https://simple-bloglist-example-ace.onrender.com${imageText}`}
           className="p-3"
         />
         <Card.Body className="text-center">
