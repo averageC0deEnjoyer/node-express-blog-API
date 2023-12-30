@@ -7,6 +7,7 @@ exports.blog_list = asyncHandler(async (req, res, next) => {
   const blogList = await Blog.find({ published: true }, '-description').sort({
     title: 1,
   });
+  //this one actually doesnt need to be protected cause the frontend can save user data and also dont need to use middleware
   if (req.user) {
     return res.status(200).json({ auth: true, data: blogList, user: req.user });
   } else {
@@ -16,6 +17,8 @@ exports.blog_list = asyncHandler(async (req, res, next) => {
 
 exports.blog_detail = asyncHandler(async (req, res, next) => {
   //search for the blog
+  //this one actually doesnt need to be protected cause the frontend can save user data and also dont need to use middleware
+
   const selectedBlog = await Blog.findById(req.params.id)
     .populate({
       path: 'commentsId',
@@ -116,7 +119,6 @@ exports.blog_detail_update_comment = asyncHandler(async (req, res, next) => {
           commentText: req.body.commentText,
           createdById: comment.createdById,
         });
-        console.log(updatedComment);
         let savedComment = await Comment.findByIdAndUpdate(
           req.body.commentId,
           updatedComment

@@ -18,7 +18,7 @@ exports.blog_list = asyncHandler(async (req, res, next) => {
 
 exports.create_blog = asyncHandler(async (req, res, next) => {
   if (req.user && req.user.adminStatus === true) {
-    if (!req.body.title || !req.body.description) {
+    if (!req.body.title || !req.body.description || !req.body.imageText) {
       return res
         .status(400)
         .json({ message: 'Please input all the required fields' });
@@ -31,6 +31,7 @@ exports.create_blog = asyncHandler(async (req, res, next) => {
       description: req.body.description,
       commentsId: [],
       createdById: req.user._id,
+      imageText: req.body.imageText,
     });
     return res.status(201).json({
       auth: true,

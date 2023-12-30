@@ -53,7 +53,7 @@ exports.sign_up_post = asyncHandler(async (req, res, next) => {
                   lastName: newUser.lastName,
                   username: newUser.username,
                   adminStatus: newUser.adminStatus, // maybe can use false here
-                  id: newUser._id,
+                  _id: newUser._id,
                 },
                 token: token,
               });

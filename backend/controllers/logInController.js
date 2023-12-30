@@ -36,7 +36,7 @@ exports.log_in_post = asyncHandler(async (req, res, next) => {
                   lastName: user.lastName,
                   username: user.username,
                   adminStatus: user.adminStatus,
-                  id: user._id,
+                  _id: user._id,
                 },
                 token,
               })
