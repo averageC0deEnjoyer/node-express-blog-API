@@ -7,7 +7,7 @@ const BlogList = ({ blogs }) => {
       <Row>
         <Col md={7}>
           <Image
-            src="http://localhost:3000/images/library.jpeg"
+            src="https://simple-bloglist-example-ace.onrender.com/images/library.jpeg"
             fluid
             rounded
           />
