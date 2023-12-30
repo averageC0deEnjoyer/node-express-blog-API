@@ -140,7 +140,7 @@ const BlogDetail = () => {
           style={{ width: '15rem' }}
           onClick={() => {
             if (!token) {
-              navigate('/login');
+              navigate('/signup');
             } else {
               setAddNewCommentBox(true);
             }

@@ -13,15 +13,20 @@ const BlogList = ({ blogs }) => {
           />
         </Col>
         <Col md={5}>
-          <h1 className="font-weight-light text-center mt-3">Tagline</h1>
+          <h1 className="font-weight-light text-center mt-3">
+            Welcome To Collection of Blog
+          </h1>
           <p className="mt-4 text-center">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed, nisi!
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid
+            quaerat quae nostrum dolore quam odit veritatis qui deleniti id
+            voluptatum aut nobis dolor, eius atque modi esse architecto? Vitae,
+            doloremque.
           </p>
         </Col>
       </Row>
       <Row>
         <Card className="text-center bg-secondary text-white my-md-5 py-md-3">
-          <Card.Body>Here are your list of available book/blog</Card.Body>
+          <Card.Body>Here are your list of available blog</Card.Body>
         </Card>
       </Row>
       <Row>
